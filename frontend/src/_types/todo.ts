@@ -1,20 +1,16 @@
-export interface TodoListData {
-  limit: number;
-  skip: number;
-  todos: TodoProps[];
-  total: number;
-}
-
-export interface TodoProps {
+interface Todo {
   id: number;
   todo: string;
+  comment: string;
   completed: boolean;
   userId: number;
 }
 
-export type addTodoType = (todoText: string, userId?: number) => Promise<void>;
-export type deleteTodoType = (id: number) => Promise<void>;
-export type completeTodoType = (
-  id: number,
-  completed: boolean
+export type TodoType = Todo;
+export type addTodoType = (
+  todoTitle: string,
+  todoComment: string,
+  userId?: number
 ) => Promise<void>;
+export type deleteTodoType = (id: number) => Promise<void>;
+export type completeTodoType = (todo: TodoType) => Promise<void>;

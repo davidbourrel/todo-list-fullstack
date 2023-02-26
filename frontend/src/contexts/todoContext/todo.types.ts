@@ -2,11 +2,11 @@ import {
   addTodoType,
   completeTodoType,
   deleteTodoType,
-  TodoProps,
+  TodoType,
 } from '@/_types/todo';
 
 export interface TodoContext {
-  todos: TodoProps[];
+  todos: TodoType[];
   isLoading: boolean;
   error: string;
   addTodo: addTodoType;

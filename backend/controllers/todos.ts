@@ -37,14 +37,21 @@ export const getTodo = async (req: Request, res: Response) => {
 
 export const createTodo = async (req: Request, res: Response) => {
   try {
+    const id = Date.now();
     const { todo, comment, completed, userId } = req.body;
 
-    const todoItem = [todo, comment, completed, userId];
+    const todoItem = [id, todo, comment, completed, userId];
     await db.run(createOne, todoItem, (err: Error | null) => {
       if (err) {
         return console.error(err.message);
       }
-      return res.status(201).json({ message: 'Todo added successfully!' });
+    });
+
+    await db.get(getOne, id, (err: Error | null, row: any) => {
+      if (err) {
+        return console.error(err.message);
+      }
+      return res.status(200).json(row);
     });
   } catch (err) {
     return res.status(500).json({ message: err });
@@ -61,7 +68,13 @@ export const updateTodo = async (req: Request, res: Response) => {
       if (err) {
         return console.error(err.message);
       }
-      return res.status(204).json({ message: 'Todo updated successfully!' });
+    });
+
+    await db.get(getOne, id, (err: Error | null, row: any) => {
+      if (err) {
+        return console.error(err.message);
+      }
+      return res.status(200).json(row);
     });
   } catch (err) {
     return res.status(500).json({ message: err });

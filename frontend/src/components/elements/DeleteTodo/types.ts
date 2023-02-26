@@ -1,3 +1,3 @@
-import { TodoProps } from '@/_types/todo';
+import { TodoType } from '@/_types/todo';
 
-export type DeleteTodoProps = Pick<TodoProps, 'id'>;
+export type DeleteTodoProps = Pick<TodoType, 'id'>;

@@ -4,35 +4,63 @@ import { isEmptyString } from '@/utils/isEmptyString';
 import Button from '../Button';
 
 const AddTodo = () => {
-  const [newTodo, setNewTodo] = useState('');
+  const [newTodoTitle, setNewTodoTitle] = useState('');
+  const [newTodoComment, setNewTodoComment] = useState('');
 
   const { addTodo } = useAddTodo();
 
   const handleAddTodo = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    addTodo(newTodo);
-    setNewTodo('');
+    addTodo(newTodoTitle, newTodoComment);
+    setNewTodoTitle('');
+    setNewTodoComment('');
   };
 
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setNewTodo(e.target.value);
+  const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setNewTodoTitle(e.target.value);
   };
+  const handleCommentChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setNewTodoComment(e.target.value);
+  };
+
+  const isTitleInputValid =
+    newTodoTitle?.length > 0 && !isEmptyString(newTodoTitle);
+  const isCommentInputValid =
+    newTodoComment?.length > 0 && !isEmptyString(newTodoComment);
 
   const isButtonDisabled =
-    newTodo?.length > 0 && !isEmptyString(newTodo) ? false : true;
+    isTitleInputValid && isCommentInputValid ? false : true;
 
   return (
-    <div className='flex mb-5'>
+    <div className='flex flex-col mb-10'>
+      <label htmlFor='add-title' className='text-sm'>
+        Add title
+      </label>
       <input
+        id='add-title'
         type='text'
-        className='bg-neutral-200 text-primary-700 border-2 border-primary-700 flex-1 w-full rounded-l-full pl-4  mr-4'
-        value={newTodo}
-        onChange={handleInputChange}
+        className='bg-neutral-200 text-primary-700 border-2 border-primary-700 flex-1 w-full px-4 mb-4'
+        value={newTodoTitle}
+        onChange={handleTitleChange}
+        placeholder='Title'
+        required
+      />
+
+      <label htmlFor='add-comment' className='text-sm'>
+        Add comment
+      </label>
+      <input
+        id='add-comment'
+        type='text'
+        className='bg-neutral-200 text-primary-700 border-2 border-primary-700 flex-1 w-full px-4 mb-4'
+        value={newTodoComment}
+        onChange={handleCommentChange}
+        placeholder='Comment'
         required
       />
 
       <Button
-        className='rounded-r-full flex-shrink-0'
+        className='rounded-full flex-shrink-0'
         onClick={handleAddTodo}
         disabled={isButtonDisabled}
       >

@@ -2,13 +2,15 @@ import { ChangeEvent } from 'react';
 import useCompleteTodo from '@/contexts/todoContext/useCompleteTodo';
 import { CompleteTodoProps } from './types';
 
-function CompleteTodo({ id, completed }: CompleteTodoProps) {
+function CompleteTodo({ todoItem }: CompleteTodoProps) {
+  const { completed } = todoItem;
+
   const { completeTodo } = useCompleteTodo();
 
   const handleComplete = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
-    e.stopPropagation();
-    completeTodo(id, !completed);
+
+    completeTodo(todoItem);
   };
 
   return (

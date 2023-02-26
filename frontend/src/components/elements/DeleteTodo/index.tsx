@@ -8,7 +8,6 @@ const DeleteTodo = ({ id }: DeleteTodoProps) => {
   const { deleteTodo } = useDeleteTodo();
 
   const handleDelete = (e: MouseEvent) => {
-    e.stopPropagation();
     e.preventDefault();
     deleteTodo(id);
   };

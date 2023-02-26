@@ -1,6 +1,6 @@
 import Spinner from '@/components/images/icons/Spinner';
 import useListTodo from '@/contexts/todoContext/useListTodo';
-import { TodoProps } from '@/_types/todo';
+import { TodoType } from '@/_types/todo';
 import Todo from '../../elements/Todo';
 
 const ListTodo = () => {
@@ -16,7 +16,7 @@ const ListTodo = () => {
 
   return (
     <ul className='flex flex-col gap-4'>
-      {nonCompletedTodoFirst.map((todoItem: TodoProps, i) => (
+      {nonCompletedTodoFirst.map((todoItem: TodoType, i) => (
         <Todo key={i + Date.now()} todoItem={todoItem} />
       ))}
     </ul>

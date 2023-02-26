@@ -1,3 +1,6 @@
-import { TodoProps } from '@/_types/todo';
+import { TodoType } from '@/_types/todo';
 
-export type TextTodoProps = Pick<TodoProps, 'completed' | 'todo'>;
+export interface TextTodoProps {
+  todoItem: TodoType;
+  isTitle?: boolean;
+}

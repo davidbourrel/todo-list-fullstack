@@ -1,4 +1,5 @@
-import { TodoProps } from '@/_types/todo';
+import { getRightBooleanFormat } from '@/utils/conversion';
+import { TodoType } from '@/_types/todo';
 import { useEffect, useState, PropsWithChildren } from 'react';
 import todoContext from './todo.context';
 import { TodoContext } from './todo.types';
@@ -8,7 +9,7 @@ const { Provider } = todoContext;
 type TodoProviderProps = PropsWithChildren;
 
 export default function TodoProvider({ children }: TodoProviderProps) {
-  const [todos, setTodos] = useState<TodoProps[]>([]);
+  const [todos, setTodos] = useState<TodoType[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
 
@@ -18,14 +19,14 @@ export default function TodoProvider({ children }: TodoProviderProps) {
       setError('');
 
       try {
-        const res = await fetch(`${process.env.TODO_BASE_URL}?limit=8`);
+        const res = await fetch(`${process.env.TODO_BASE_URL}`);
 
         if (!res.ok) {
           throw `Error ${res.status} ${res.statusText}`;
         }
 
-        const data = await res.json();
-        setTodos(data?.todos);
+        const todos = await res.json();
+        setTodos(todos);
       } catch (err) {
         console.error(err);
         setError(err as string);
@@ -37,16 +38,21 @@ export default function TodoProvider({ children }: TodoProviderProps) {
     getAllTodos();
   }, []);
 
-  const addTodo = async (todoText: string, userId = 5) => {
+  const addTodo = async (
+    todoTitle: string,
+    todoComment: string,
+    userId = 5
+  ) => {
     setIsLoading(true);
     setError('');
 
     try {
-      const res = await fetch(`${process.env.TODO_BASE_URL}/add`, {
+      const res = await fetch(`${process.env.TODO_BASE_URL}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          todo: todoText,
+          todo: todoTitle,
+          comment: todoComment,
           completed: false,
           userId,
         }),
@@ -56,7 +62,7 @@ export default function TodoProvider({ children }: TodoProviderProps) {
         throw `Error ${res.status} ${res.statusText}`;
       }
 
-      const newTodo: TodoProps = await res.json();
+      const newTodo: TodoType = await res.json();
 
       setTodos((c) => [newTodo, ...c]);
     } catch (err) {
@@ -67,16 +73,23 @@ export default function TodoProvider({ children }: TodoProviderProps) {
     }
   };
 
-  const completeTodo = async (id: number, completed: boolean) => {
+  const completeTodo = async (todo: TodoType) => {
     setIsLoading(true);
     setError('');
 
+    // Todo has to be format because SQLITE accept 0 (false) or 1 (true) only
+    const newFormattedTodo = {
+      ...todo,
+      completed: getRightBooleanFormat(!todo.completed),
+    };
+    console.log('newFormattedTodo', newFormattedTodo);
+
     try {
-      const res = await fetch(`${process.env.TODO_BASE_URL}/${id}`, {
+      const res = await fetch(`${process.env.TODO_BASE_URL}/${todo?.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          completed: completed,
+          ...newFormattedTodo,
         }),
       });
 
@@ -84,11 +97,9 @@ export default function TodoProvider({ children }: TodoProviderProps) {
         throw `Error ${res.status} ${res.statusText}`;
       }
 
-      const updatedTodo: TodoProps = await res.json();
-
       setTodos((c) =>
-        c.map((todo) =>
-          todo.id === id ? { ...todo, completed: updatedTodo.completed } : todo
+        c.map((currentTodo) =>
+          currentTodo.id === todo?.id ? newFormattedTodo : currentTodo
         )
       );
     } catch (err) {

@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
-import { TodoProps } from '@/_types/todo';
+import { TodoType } from '@/_types/todo';
 import Spinner from '@/components/images/icons/Spinner';
 import TextTodo from '@/components/elements/TextTodo';
 import Button from '@/components/elements/Button';
 import Link from '@/components/elements/Link';
 
 const TodoId = () => {
-  const [todo, setTodo] = useState<TodoProps>();
+  const [todo, setTodo] = useState<TodoType>();
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
 
@@ -55,7 +55,8 @@ const TodoId = () => {
         {!!todo?.todo && (
           <div className='flex flex-col gap-2'>
             <p className='mb-2'>TODO #{todo?.id}</p>
-            <TextTodo todo={todo?.todo} completed={todo?.completed} />
+            <TextTodo todoItem={todo} isTitle={true} />
+            <TextTodo todoItem={todo} />
             {todo?.completed ? (
               <p className='text-green-700 dark:text-green-400'>Completed</p>
             ) : (
