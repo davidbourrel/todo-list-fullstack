@@ -16,9 +16,15 @@ const ListTodo = () => {
 
   return (
     <ul className='flex flex-col gap-4'>
-      {nonCompletedTodoFirst.map((todoItem: TodoType, i) => (
-        <Todo key={i + Date.now()} todoItem={todoItem} />
-      ))}
+      {nonCompletedTodoFirst?.length > 0 ? (
+        nonCompletedTodoFirst.map((todoItem: TodoType, i) => (
+          <Todo key={i + Date.now()} todoItem={todoItem} />
+        ))
+      ) : (
+        <p className='font-bold text-center text-xl mt-10'>
+          Todo list is empty
+        </p>
+      )}
     </ul>
   );
 };
