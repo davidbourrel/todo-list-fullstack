@@ -82,7 +82,6 @@ export default function TodoProvider({ children }: TodoProviderProps) {
       ...todo,
       completed: getRightBooleanFormat(!todo.completed),
     };
-    console.log('newFormattedTodo', newFormattedTodo);
 
     try {
       const res = await fetch(`${process.env.TODO_BASE_URL}/${todo?.id}`, {
