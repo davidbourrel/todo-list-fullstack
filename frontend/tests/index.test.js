@@ -3,8 +3,8 @@ import '@testing-library/jest-dom';
 import { fireEvent, render, screen } from '@testing-library/react';
 
 describe('Home', () => {
-  it("renders main title 'TODO LIST'", () => {
+  it("renders main title 'THINGS TO DO'", () => {
     render(<Home />);
-    expect(screen.getByText('TODO LIST')).toBeInTheDocument();
+    expect(screen.getByText('THINGS TO DO')).toBeInTheDocument();
   });
 });

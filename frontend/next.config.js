@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   env: {
-    TODO_BASE_URL: 'https://dummyjson.com/todos',
+    TODO_BASE_URL: 'http://localhost:5000/todos',
   },
 };
 

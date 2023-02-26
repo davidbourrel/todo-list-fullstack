@@ -1,7 +1,7 @@
 export interface Todo {
-  todoId: number;
+  id: number;
   todo: string;
-  comments: string;
+  comment: string;
   completed: boolean;
   userId: number;
 }

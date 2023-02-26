@@ -23,7 +23,7 @@ export const db = new sqlite3.Database(FILE_SQLITE_DB, (err: Error | null) => {
 });
 
 db.serialize(() => {
-  // Create a table Todos (todoId, todo, comments, completed, userId)
+  // Create a table Todos (id, todo, comment, completed, userId)
   db.run(SQL_CREATE, (err: Error | null) => {
     if (err) {
       return console.error(err.message);
