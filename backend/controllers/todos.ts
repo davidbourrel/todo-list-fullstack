@@ -37,10 +37,10 @@ export const getTodo = async (req: Request, res: Response) => {
 
 export const createTodo = async (req: Request, res: Response) => {
   try {
-    const { body } = req;
+    const { todo, comment, completed, userId } = req.body;
 
-    const book = [body.Titre, body.Auteur, body.Commentaires];
-    await db.run(createOne, book, (err: Error | null) => {
+    const todoItem = [todo, comment, completed, userId];
+    await db.run(createOne, todoItem, (err: Error | null) => {
       if (err) {
         return console.error(err.message);
       }
@@ -53,12 +53,11 @@ export const createTodo = async (req: Request, res: Response) => {
 
 export const updateTodo = async (req: Request, res: Response) => {
   try {
-    const { body } = req;
     const { id } = req.params;
+    const { todo, comment, completed, userId } = req.body;
 
-    const book = [body.Titre, body.Auteur, body.Commentaires, id];
-
-    await db.run(updateOne, book, (err: Error | null) => {
+    const todoItem = [todo, comment, completed, userId, id];
+    await db.run(updateOne, todoItem, (err: Error | null) => {
       if (err) {
         return console.error(err.message);
       }
