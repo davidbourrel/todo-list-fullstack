@@ -2,8 +2,8 @@
 
 **Stack**
 
-Frontend: NextJS, TypeScript Tailwind, Testing-library
-Backend: Express (nodejs), TypeScript, SQLITE
+- Frontend: NextJS, TypeScript Tailwind, Testing-library
+- Backend: Express (nodejs), TypeScript, SQLITE
 
 ## FRONT-END FOLDER
 
@@ -48,6 +48,7 @@ npm start
 ## DATABASE (SQLITE)
 
 ### Insert Data
+
 All data are insert when you start the server with **npm start** from _data/todolist.db_.
 
 ### Reset Data and recreate with mocked data
