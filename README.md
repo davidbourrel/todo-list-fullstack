@@ -1,47 +1,51 @@
-# DOSSIER FRONT-END
+# FRONT-END FOLDER
 
-Aller dans le dossier frontend :
+Go to frontend folder :
 
 ```bash
 cd frontend
 ```
 
-Installer les dépendances :
+Install dependances :
 
 ```bash
 npm i
 ```
 
-Démarrer le serveur de développement :
+Start server :
 
 ```bash
 npm run dev
 ```
 
-# DOSSIER BACK-END
+# BACK-END FOLDER
 
-Aller dans le dossier backend :
+Go to backend folder :
 
 ```bash
 cd backend
 ```
 
-Installer les dépendances :
+Install dependances :
 
 ```bash
 npm i
 ```
 
-Démarrer le serveur de développement :
+Start server :
 
 ```bash
 npm start
 ```
 
-## DATABASE (SQL)
+## DATABASE (SQLITE)
 
-Le Dump est disponible dans le projet.
+All data are insert when you start the server with **npm start**.
 
 ## End-points
 
-Tout ce trouve dans le dossier back-end / routes. Il faut faire par exemple : http://localhost:5000/burgers pour récupérer les burgers.
+**getAllTodos**: GET http://localhost:5000/todos
+**getTodo**: GET http://localhost:5000/todos/ID
+**createTodo**: POST http://localhost:5000/todos
+**updateTodo**: PUT http://localhost:5000/todos/ID
+**deleteTodo**: DELETE http://localhost:5000/todos/ID
